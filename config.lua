@@ -38,8 +38,12 @@ Config.Targets = {
     }
 }
 
--- Loadout menu options with metadata
 Config.LoadoutOptions = {}
+
+table.insert(Config.LoadoutOptions, {
+    progress = 100,
+    colorScheme = '#e03131',
+})
 
 for _, target in ipairs(Config.Targets) do
     local metadata = {}
@@ -57,7 +61,6 @@ for _, target in ipairs(Config.Targets) do
         })
     end
 
-    -- Add the loadout option to the Config.LoadoutOptions
     table.insert(Config.LoadoutOptions, {
         title = target.label,           -- Localized title for the loadout option
         description = target.description,
@@ -68,6 +71,11 @@ for _, target in ipairs(Config.Targets) do
         end
     })
 end
+
+table.insert(Config.LoadoutOptions, {
+    progress = 100,
+    colorScheme = '#e03131',
+})
 
 -- Target box zone settings for loadout interaction
 Config.TargetBox = {
