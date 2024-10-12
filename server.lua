@@ -1,12 +1,30 @@
 local loadoutQueue = {}
 
 function giveLoadoutItems(playerId, loadoutLabel)
+    local player = nil
+    local isESX = GetResourceState('es_extended') == 'started'
+    local isQBCore = GetResourceState('qb-core') == 'started'
+
+    if isESX then
+        player = ESX.GetPlayerFromId(playerId)
+        if player.job.name ~= "police" then
+            return
+        end
+    elseif isQBCore then
+        player = QBCore.Functions.GetPlayer(playerId)
+        if player.PlayerData.job.name ~= "police" then
+            return
+        end
+    else
+        return
+    end
+
     for _, target in ipairs(Config.Targets) do
         if target.label == loadoutLabel then
             for _, item in ipairs(target.items) do
-                local success, response = exports.ox_inventory:AddItem(playerId, item.item, item.amount) 
+                local success, response = exports.ox_inventory:AddItem(playerId, item.item, item.amount)
                 if not success then
-                    print("Failed to add item:", response)
+                    
                 end
             end
         end
